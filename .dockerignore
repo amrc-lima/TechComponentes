@@ -1,0 +1,13 @@
+# Only application files enter the build context. Local dependencies, caches,
+# credentials, deployment metadata and business documents stay on the host.
+**
+!package.json
+!package-lock.json
+!next.config.ts
+!tsconfig.json
+!postcss.config.mjs
+!eslint.config.mjs
+!src/
+!src/**
+!public/
+!public/**
