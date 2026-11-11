@@ -1,196 +1,51 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { products } from '@/data/products';
-import { FaShoppingCart, FaUserCog, FaCheckCircle, FaExclamationTriangle, FaFilePdf, FaMicrochip, FaShieldAlt, FaTools } from 'react-icons/fa';
-import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
-import { ProductDetailSkeleton } from '@/components/Skeleton';
+import { FaArrowLeft, FaCartPlus, FaFileAlt, FaMicrochip } from 'react-icons/fa';
+import { products, productApplications, productAudiences, productCategories } from '@/data/products';
+import { useCart } from '@/context/CartContext';
+import ContactLink from '@/components/ContactLink';
+import { formatCurrency } from '@/lib/contact';
 
-const ProductDetailPage = () => {
-  const params = useParams();
-  const id = params.id as string;
-  const { addToCart } = useCart();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simular carregamento
-    const timer = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const product = products.find(p => p.id === id);
-
-  if (loading) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-        <ProductDetailSkeleton />
-      </div>
-    );
-  }
-
-  if (!product) {
-    return (
-      <main className="flex-grow py-20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <FaExclamationTriangle className="text-6xl text-red-400 mx-auto mb-4" />
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Produto não encontrado</h2>
-          <p className="text-gray-500 mb-8">O item que você está procurando pode estar sem estoque ou a URL é inválida.</p>
-          <Link href="/produtos" className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition">
-            Voltar ao Catálogo
-          </Link>
-        </div>
-      </main>
-    );
-  }
-
+export default function ProductDetailPage() {
+  const { id } = useParams<{ id: string }>();
+  const { addToCart, isHydrated } = useCart();
+  const product = products.find((item) => item.id === id);
+  if (!product) return <div className="mx-auto max-w-3xl px-4 py-20 text-center"><h1 className="mb-4 text-3xl font-bold text-slate-900">Produto não encontrado</h1><p className="mb-7 text-slate-600">Não encontramos essa referência no catálogo atual.</p><Link href="/produtos" className="inline-flex items-center gap-2 font-bold text-blue-700"><FaArrowLeft aria-hidden="true" /> Voltar ao catálogo</Link></div>;
+  const applications = product.applications.map((value) => productApplications.find((item) => item.value === value)?.label).filter(Boolean);
+  const audiences = product.audiences.map((value) => productAudiences.find((item) => item.value === value)?.label).filter(Boolean);
+  const categoryLabel = productCategories.find((item) => item.value === product.category)?.label ?? product.tag;
   return (
-    <main className="flex-grow py-12 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <nav className="text-sm text-gray-400 mb-8" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-blue-600 transition">Início</Link>
-          <span className="mx-2">/</span>
-          <Link href="/produtos" className="hover:text-blue-600 transition">Catálogo</Link>
-          <span className="mx-2">/</span>
-          <span className="text-gray-800 font-semibold">{product.nome}</span>
-        </nav>
-
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
-          <div className="flex flex-col lg:flex-row">
-            {/* Imagem e Selos */}
-            <div className="lg:w-1/2 p-8 lg:p-12 bg-white flex flex-col">
-              <div className="relative h-96 w-full mb-6">
-                <Image 
-                  src={product.img} 
-                  alt={product.nome} 
-                  fill
-                  className="object-contain rounded-2xl" 
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                {product.tier === 'High-End' && (
-                  <div className="absolute top-4 left-4 bg-indigo-600 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg flex items-center gap-2">
-                    <FaMicrochip /> High-End Robotics
-                  </div>
-                )}
-              </div>
-
-              {/* Selo de Homologação Profissional */}
-              <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 flex items-center gap-5">
-                <div className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center text-2xl shadow-inner">
-                  <FaShieldAlt />
-                </div>
-                <div>
-                  <h4 className="font-bold text-blue-900 text-sm uppercase">Item Homologado</h4>
-                  <p className="text-blue-700 text-xs leading-relaxed">Validado em nosso laboratório em Salvador para garantir conformidade com o datasheet.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Informações e Ações */}
-            <div className="lg:w-1/2 p-8 lg:p-12 bg-gray-50 border-l border-gray-100 flex flex-col">
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-bold text-blue-600 bg-blue-100 px-3 py-1 rounded-full uppercase tracking-wider">
-                  {product.tag}
-                </span>
-                <span className="text-[10px] font-bold text-gray-400 uppercase">Ref: {product.id}</span>
-              </div>
-              
-              <h1 className="text-3xl lg:text-4xl font-extrabold text-gray-900 mb-4 leading-tight">
-                {product.nome}
-              </h1>
-              
-              <div className="mb-6 pb-6 border-b border-gray-200">
-                <p className="text-gray-500 text-xs mb-2 leading-relaxed italic">
-                  Ideal para estudantes e empresas que buscam <strong>homologação técnica de alto nível</strong> para evitar queima de hardware e atrasos de projeto.
-                </p>
-                <div className="flex items-baseline gap-2 mt-4">
-                  <span className="text-4xl font-extrabold text-blue-950">{product.preco}</span>
-                  <div className="flex flex-col">
-                    <span className="text-green-600 text-[10px] font-bold uppercase flex items-center gap-1">
-                      <FaCheckCircle /> Pronta Entrega
-                    </span>
-                    <span className="text-gray-400 text-[9px]">Retirada imediata ou envio ágil</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-6 mb-8">
-                <div>
-                  <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 italic">Para quê serve? (Contexto)</h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {product.desc}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 italic">Quem deve comprar?</h4>
-                    <p className="text-gray-600 text-xs leading-relaxed">
-                      {product.tier === 'High-End' 
-                        ? "Engenheiros de hardware, laboratórios de IA e desenvolvedores de soluções industriais." 
-                        : "Estudantes de engenharia, técnicos e hobbistas que precisam de insumos básicos com garantia."}
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 italic">Nossa Logística</h4>
-                    <p className="text-gray-600 text-xs leading-relaxed">
-                      Estoque físico centralizado para atendimento rápido. Atendemos com a logística mais eficiente da região.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Tabela Técnica de Engenharia */}
-              <div className="mb-10">
-                <h4 className="text-sm font-bold text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                  <FaTools className="text-blue-600" /> Especificações de Engenharia
-                </h4>
-                <div className="grid grid-cols-2 gap-4">
-                  {product.specs.map((spec, index) => (
-                    <div key={index} className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
-                      <p className="text-[10px] text-gray-400 font-bold uppercase">{spec.label}</p>
-                      <p className="text-sm font-bold text-gray-700">{spec.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-col gap-4 mt-auto">
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button 
-                    onClick={() => addToCart(product)}
-                    className="bg-blue-600 hover:bg-blue-700 transition text-white font-bold py-5 px-8 rounded-2xl shadow-xl flex-grow flex items-center justify-center gap-3 text-lg"
-                  >
-                    <FaShoppingCart /> Adicionar ao Carrinho
-                  </button>
-                  {product.datasheetUrl !== "#" && (
-                    <a 
-                      href={product.datasheetUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-white border-2 border-gray-200 text-gray-700 hover:bg-gray-50 transition font-bold py-5 px-8 rounded-2xl flex items-center justify-center gap-3"
-                    >
-                      <FaFilePdf className="text-red-600" /> Datasheet
-                    </a>
-                  )}
-                </div>
-                <div className="bg-indigo-900/5 p-4 rounded-xl border border-indigo-100 mt-2">
-                  <p className="text-xs text-indigo-900 leading-relaxed text-center font-medium">
-                    <strong>Como comprar?</strong> Adicione ao carrinho e finalize via WhatsApp. Nossa equipe técnica entrará em contato para combinar a entrega mais rápida para você.
-                  </p>
-                </div>
-              </div>
-            </div>
+    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <nav aria-label="Caminho da página" className="mb-8 flex flex-wrap gap-2 text-sm text-slate-500"><Link href="/" className="hover:text-blue-700">Início</Link><span aria-hidden="true">/</span><Link href="/produtos" className="hover:text-blue-700">Catálogo</Link><span aria-hidden="true">/</span><span className="text-slate-800">{product.nome}</span></nav>
+      <div className="grid overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-2">
+        <div className="flex flex-col p-6 sm:p-10">
+          <div className="relative flex min-h-80 flex-1 items-center justify-center">
+            {product.imageNote ? <div className="p-10 text-center text-slate-400"><FaMicrochip className="mx-auto mb-5 text-6xl" aria-hidden="true" /><p>{product.imageNote}</p></div> : <Image src={product.img} alt={product.nome} fill className="object-contain p-4" sizes="(max-width: 1024px) 100vw, 50vw" priority />}
           </div>
+          <div className="mt-8 rounded-2xl bg-blue-50 p-5 text-sm leading-relaxed text-blue-900"><h2 className="mb-2 font-bold">Confira antes de montar</h2><p>{product.compatibility}</p></div>
+        </div>
+        <div className="border-t border-slate-100 bg-slate-50 p-6 sm:p-10 lg:border-l lg:border-t-0">
+          <Link href={`/produtos?categoria=${product.category}`} className="text-xs font-bold uppercase tracking-widest text-blue-600">{categoryLabel}</Link>
+          <h1 className="mt-4 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">{product.nome}</h1>
+          <p className="mt-3 text-sm text-slate-500">Referência do catálogo: {product.id}</p>
+          <p className="mt-6 text-3xl font-extrabold text-blue-950">{formatCurrency(product.precoNumerico)}</p>
+          <p className="mt-2 text-sm font-semibold text-slate-600">{product.availability}</p>
+          <p className="mt-6 leading-relaxed text-slate-600">{product.desc}</p>
+          <dl className="my-7 space-y-4 text-sm"><div><dt className="font-bold text-slate-900">Aplicações</dt><dd className="mt-1 text-slate-600">{applications.join(' · ')}</dd></div><div><dt className="font-bold text-slate-900">Para quem</dt><dd className="mt-1 text-slate-600">{audiences.join(' · ')}</dd></div></dl>
+          {product.certification && <div className="mb-6 rounded-xl border border-blue-200 bg-white p-4 text-sm"><p className="font-bold text-slate-900">{product.certification.label}</p><p className="mt-1 text-slate-600">Referência: {product.certification.reference}</p>{product.certification.url && <a href={product.certification.url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-semibold text-blue-700 hover:underline">Consultar documentação</a>}</div>}
+          <button type="button" disabled={!isHydrated} onClick={() => addToCart(product)} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-white hover:bg-blue-700 disabled:opacity-50"><FaCartPlus aria-hidden="true" /> Adicionar ao carrinho</button>
+          <ContactLink message={`Gostaria de orientação sobre ${product.nome} (referência ${product.id}) e sua compatibilidade com meu projeto.`} className="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-blue-200 bg-white px-6 py-4 text-center font-bold text-blue-700 hover:bg-blue-50">Pedir orientação sobre esta peça</ContactLink>
+          <p className="mt-4 text-sm leading-relaxed text-slate-500">Use o carrinho para preparar um orçamento. Disponibilidade, frete, prazo e condições serão confirmados no atendimento.</p>
         </div>
       </div>
-    </main>
+      <section className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" aria-labelledby="specs-heading">
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4"><h2 id="specs-heading" className="text-2xl font-bold text-slate-900">Especificações técnicas</h2>{product.datasheetUrl && product.datasheetUrl !== '#' && <a href={product.datasheetUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-blue-200 px-4 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50"><FaFileAlt aria-hidden="true" /> Consultar datasheet</a>}</div>
+        <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{product.specs.map((spec) => <div key={spec.label} className="rounded-xl bg-slate-50 p-4"><dt className="text-sm text-slate-500">{spec.label}</dt><dd className="mt-2 font-semibold text-slate-900">{spec.value}</dd></div>)}</dl>
+        <p className="mt-6 text-sm leading-relaxed text-slate-500">Confira o modelo e a revisão da peça na documentação antes de definir a montagem. Caso precise de uma característica que não aparece aqui, inclua a dúvida na solicitação.</p>
+      </section>
+    </div>
   );
-};
-
-
-export default ProductDetailPage;
+}

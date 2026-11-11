@@ -13,9 +13,18 @@ export interface Product {
     value: string;
   }[];
   datasheetUrl: string;
+  category: string;
+  audiences: string[];
+  applications: string[];
+  availability: string;
+  compatibility: string;
+  imageNote?: string;
+  certification?: { label: string; reference: string; url?: string };
 }
 
-export const products: Product[] = [
+type BaseProduct = Omit<Product, 'category' | 'audiences' | 'applications' | 'availability' | 'compatibility'>;
+
+const baseProducts: BaseProduct[] = [
   // --- HIGH-END ROBOTICS & IMPORTED (10-15%) ---
   {
     id: "jetson-nano",
@@ -23,7 +32,8 @@ export const products: Product[] = [
     preco: "R$ 1.250,00",
     precoNumerico: 1250.00,
     desc: "Importado (USA). IA de borda com GPU Maxwell de 128 núcleos. O cérebro para robôs autônomos e visão computacional avançada.",
-    img: "https://developer-blogs.nvidia.com/wp-content/uploads/2023/03/jetson-orin-nano-developer-kit-3d-render-.png",
+    img: "/file.svg",
+    imageNote: "Imagem do modelo ainda não disponível",
     tag: "IA & Visão",
     featured: true,
     tier: 'High-End',
@@ -93,7 +103,7 @@ export const products: Product[] = [
     nome: "Módulo ESP32 NodeMCU Wi-Fi",
     preco: "R$ 48,00",
     precoNumerico: 48.00,
-    desc: "O padrão ouro da automação IoT. Este módulo integra Wi-Fi e Bluetooth Dual-Mode.",
+    desc: "Placa de desenvolvimento para estudar conectividade Wi-Fi e Bluetooth em projetos IoT.",
     img: "https://cdn.awsli.com.br/600x700/468/468162/produto/40224659/491fa7b39e.jpg",
     tag: "Módulos",
     tier: 'Standard',
@@ -123,7 +133,7 @@ export const products: Product[] = [
     nome: "Arduino Starter Kit",
     preco: "R$ 195,00",
     precoNumerico: 195.00,
-    desc: "Solução completa para disciplinas de Introdução à Engenharia e Robótica.",
+    desc: "Kit de componentes para atividades introdutórias de eletrônica e robótica. Confira o conteúdo antes de planejar a atividade.",
     img: "https://m.media-amazon.com/images/I/617sMRpfODL.jpg",
     tag: "Kits Maker",
     tier: 'Standard',
@@ -179,7 +189,7 @@ export const products: Product[] = [
     nome: "Multímetro Digital Portátil",
     preco: "R$ 45,00",
     precoNumerico: 45.00,
-    desc: "Insumo de bancada obrigatório para qualquer laboratório.",
+    desc: "Instrumento de bancada para atividades de medição e estudo de eletrônica.",
     img: "https://m.media-amazon.com/images/I/61PuUTq9GSL._AC_UF894,1000_QL80_.jpg",
     tag: "Ferramentas",
     tier: 'Standard',
@@ -193,7 +203,7 @@ export const products: Product[] = [
     nome: "Protoboard 830 Pontos",
     preco: "R$ 28,00",
     precoNumerico: 28.00,
-    desc: "Base para prototipagem de alto escoamento.",
+    desc: "Base para organizar circuitos de estudo e protótipos sem solda.",
     img: "https://cdn.awsli.com.br/600x700/468/468162/produto/19414406cc45ede84a.jpg",
     tag: "Acessórios",
     tier: 'Standard',
@@ -221,7 +231,7 @@ export const products: Product[] = [
     nome: "Motor DC 3-6V com Caixa de Redução",
     preco: "R$ 12,00",
     precoNumerico: 12.00,
-    desc: "Componente básico de altíssimo escoamento para robôs seguidores de linha.",
+    desc: "Motor com redução para explorar mecanismos e movimentação em projetos de robótica.",
     img: "https://cdn.awsli.com.br/600x700/1158/1158247/produto/194008490/1-face-motor-roda3-27c67efb5d.jpg",
     tag: "Robótica",
     tier: 'Standard',
@@ -266,7 +276,7 @@ export const products: Product[] = [
     nome: "Kit Resistores 1/4W (20 valores x 20 unidades)",
     preco: "R$ 35,00",
     precoNumerico: 35.00,
-    desc: "O combustível de qualquer bancada. Estoque massivo para escolas e faculdades.",
+    desc: "Conjunto de resistores de diferentes valores para estudar circuitos e organizar a bancada.",
     img: "https://http2.mlstatic.com/D_NQ_NP_850263-MLB87069914718_072025-O.webp",
     tag: "Componentes",
     tier: 'Standard',
@@ -322,3 +332,63 @@ export const products: Product[] = [
     ]
   }
 ];
+
+export const productCategories = [
+  { value: 'kits', label: 'Kits educacionais' },
+  { value: 'componentes', label: 'Componentes básicos' },
+  { value: 'placas', label: 'Placas de desenvolvimento' },
+  { value: 'sensores', label: 'Sensores' },
+  { value: 'comunicacao', label: 'Comunicação' },
+  { value: 'robotica', label: 'Robótica' },
+  { value: 'ferramentas', label: 'Ferramentas de bancada' },
+  { value: 'acessorios', label: 'Acessórios e prototipagem' },
+  { value: 'displays', label: 'Displays' },
+];
+
+export const productAudiences = [
+  { value: 'estudantes', label: 'Estudantes e educação' },
+  { value: 'tecnicos', label: 'Técnicos e makers' },
+  { value: 'empresas', label: 'Empresas e instituições' },
+];
+
+export const productApplications = [
+  { value: 'aprendizado', label: 'Aprendizado' },
+  { value: 'prototipagem', label: 'Prototipagem' },
+  { value: 'manutencao', label: 'Manutenção e bancada' },
+  { value: 'automacao', label: 'Automação' },
+  { value: 'robotica', label: 'Robótica' },
+  { value: 'iot', label: 'IoT e conectividade' },
+  { value: 'ia', label: 'Visão e IA' },
+];
+
+type ProductMetadata = Pick<Product, 'category' | 'audiences' | 'applications'>;
+const allAudiences = ['estudantes', 'tecnicos', 'empresas'];
+const productMetadata: Record<string, ProductMetadata> = {
+  'jetson-nano': { category: 'placas', audiences: ['estudantes', 'tecnicos', 'empresas'], applications: ['prototipagem', 'ia', 'robotica'] },
+  'rplidar-a1': { category: 'sensores', audiences: allAudiences, applications: ['robotica', 'prototipagem'] },
+  'lorawan-gateway': { category: 'comunicacao', audiences: ['tecnicos', 'empresas'], applications: ['iot', 'automacao'] },
+  'raspberry-pi-4': { category: 'placas', audiences: allAudiences, applications: ['aprendizado', 'prototipagem', 'iot'] },
+  esp32: { category: 'placas', audiences: allAudiences, applications: ['aprendizado', 'iot', 'automacao'] },
+  'arduino-uno': { category: 'placas', audiences: allAudiences, applications: ['aprendizado', 'prototipagem', 'robotica'] },
+  'kit-iniciante': { category: 'kits', audiences: allAudiences, applications: ['aprendizado', 'prototipagem'] },
+  'hc-sr04': { category: 'sensores', audiences: allAudiences, applications: ['aprendizado', 'robotica', 'prototipagem'] },
+  jumpers: { category: 'acessorios', audiences: allAudiences, applications: ['aprendizado', 'prototipagem', 'manutencao'] },
+  'ferro-40w': { category: 'ferramentas', audiences: ['tecnicos', 'empresas'], applications: ['manutencao', 'prototipagem'] },
+  multimetro: { category: 'ferramentas', audiences: allAudiences, applications: ['aprendizado', 'manutencao', 'prototipagem'] },
+  protoboard: { category: 'acessorios', audiences: allAudiences, applications: ['aprendizado', 'prototipagem'] },
+  'suporte-ferro': { category: 'ferramentas', audiences: ['tecnicos', 'empresas'], applications: ['manutencao', 'prototipagem'] },
+  'motor-dc-amarelo': { category: 'robotica', audiences: allAudiences, applications: ['aprendizado', 'robotica'] },
+  'sg90-servo': { category: 'robotica', audiences: allAudiences, applications: ['aprendizado', 'robotica', 'prototipagem'] },
+  'oled-display': { category: 'displays', audiences: allAudiences, applications: ['iot', 'prototipagem', 'aprendizado'] },
+  'pote-resistores': { category: 'componentes', audiences: allAudiences, applications: ['aprendizado', 'prototipagem', 'manutencao'] },
+  'esp-cam': { category: 'placas', audiences: allAudiences, applications: ['iot', 'ia', 'prototipagem'] },
+  dht22: { category: 'sensores', audiences: allAudiences, applications: ['iot', 'automacao', 'aprendizado'] },
+  sim800l: { category: 'comunicacao', audiences: ['tecnicos', 'empresas'], applications: ['iot', 'prototipagem'] },
+};
+
+export const products: Product[] = baseProducts.map((product) => ({
+  ...product,
+  ...productMetadata[product.id],
+  availability: 'Disponibilidade a consultar',
+  compatibility: 'Confirme o modelo exato, a alimentação e as interfaces com os demais componentes do seu projeto. Consulte a documentação da peça antes da montagem.',
+}));

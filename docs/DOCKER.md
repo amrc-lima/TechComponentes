@@ -55,5 +55,9 @@ durante a compilação.
 ## Estado atual da aplicação
 
 O projeto não exige variáveis de ambiente nem serviços de banco de dados na
-configuração atual. Carrinho e pedidos ficam no `localStorage` do navegador.
-Imagens remotas, vídeos e links de WhatsApp dependem de acesso à internet.
+configuração atual. Carrinho e histórico de orçamentos ficam no `localStorage`
+do navegador.
+Os formulários preparam resumos para copiar ou compartilhar pelo navegador, sem
+destinatário ou número de telefone predefinido. Preparar um resumo não confirma
+uma compra nem envia uma mensagem automaticamente. Imagens remotas e datasheets
+externos dependem de acesso à internet.

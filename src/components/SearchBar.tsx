@@ -1,146 +1,91 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { products, Product } from '@/data/products';
+import Image from 'next/image';
 import { FaSearch } from 'react-icons/fa';
+import { products } from '@/data/products';
+import { formatCurrency } from '@/lib/contact';
 
-const SearchBar = () => {
+function normalize(text: string) {
+  return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+export default function SearchBar() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Product[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Função para remover acentos (Normalização)
-  const normalize = (text: string) => {
-    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-  };
-
-  // Lógica de busca refinada com normalização
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setQuery(value);
-
-    if (value.trim().length > 0) {
-      const normalizedQuery = normalize(value);
-      
-      const filtered = products.filter(p =>
-        normalize(p.nome).includes(normalizedQuery) ||
-        normalize(p.tag).includes(normalizedQuery) ||
-        normalize(p.desc).includes(normalizedQuery)
-      ).slice(0, 6);
-      
-      setResults(filtered);
-      setIsOpen(true);
-    } else {
-      setResults([]);
-      setIsOpen(false);
-    }
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const inputId = useId();
+  const listId = useId();
+  const term = normalize(query.trim());
+  const results = term ? products.filter((product) => normalize([
+    product.nome, product.id, product.tag, product.desc,
+    ...product.specs.flatMap((spec) => [spec.label, spec.value]),
+  ].join(' ')).includes(term)).slice(0, 6) : [];
+  const showResults = isOpen && term.length > 0;
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    function closeOutside(event: MouseEvent) {
+      if (!containerRef.current?.contains(event.target as Node)) setIsOpen(false);
+    }
+    document.addEventListener('mousedown', closeOutside);
+    return () => document.removeEventListener('mousedown', closeOutside);
   }, []);
 
-  const handleSearch = (e?: React.FormEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    
-    if (query.trim()) {
-      const targetUrl = `/produtos?busca=${encodeURIComponent(query.trim())}`;
-      setIsOpen(false);
-      setQuery('');
-      
-      // Forçar navegação em qualquer ambiente
-      window.location.href = targetUrl; 
-    }
-  };
-
-  const navigateToProduct = (id: string) => {
+  function navigate(href: string) {
     setIsOpen(false);
+    setActiveIndex(-1);
     setQuery('');
-    router.push(`/produto/${id}`);
-  };
+    router.push(href);
+  }
+  function search(event?: FormEvent) {
+    event?.preventDefault();
+    if (query.trim()) navigate(`/produtos?busca=${encodeURIComponent(query.trim())}`);
+  }
+  function keyDown(event: KeyboardEvent<HTMLInputElement>) {
+    if (event.key === 'Escape') {
+      setIsOpen(false);
+      setActiveIndex(-1);
+    } else if (event.key === 'ArrowDown' && results.length) {
+      event.preventDefault();
+      setIsOpen(true);
+      setActiveIndex((index) => (index + 1) % results.length);
+    } else if (event.key === 'ArrowUp' && results.length) {
+      event.preventDefault();
+      setIsOpen(true);
+      setActiveIndex((index) => index <= 0 ? results.length - 1 : index - 1);
+    } else if (event.key === 'Enter' && showResults && activeIndex >= 0 && results[activeIndex]) {
+      event.preventDefault();
+      navigate(`/produto/${results[activeIndex].id}`);
+    }
+  }
 
   return (
-    <div className="w-full md:w-1/3 relative" ref={dropdownRef}>
-      <form 
-        onSubmit={handleSearch} 
-        className="w-full flex relative z-[60]"
-        action="#"
-      >
-        <input
-          type="text"
-          value={query}
-          onChange={handleInputChange}
-          onFocus={() => query.trim().length > 0 && setIsOpen(true)}
-          placeholder="O que você está procurando?"
-          className="w-full pl-4 pr-10 py-2.5 rounded-full text-gray-800 bg-white border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-lg"
-          autoComplete="off"
-        />
-        <button 
-          type="submit"
-          className="absolute right-3 top-2.5 text-gray-500 hover:text-blue-600 transition"
-        >
-          <FaSearch className="text-lg" />
-        </button>
+    <div ref={containerRef} className="relative w-full" onBlur={(event) => { if (!containerRef.current?.contains(event.relatedTarget as Node)) setIsOpen(false); }}>
+      <form onSubmit={search} role="search" className="relative">
+        <label htmlFor={inputId} className="sr-only">Buscar componentes por nome, código ou especificação</label>
+        <input id={inputId} type="search" value={query} onChange={(event) => { setQuery(event.target.value); setIsOpen(true); setActiveIndex(-1); }} onFocus={() => setIsOpen(true)} onKeyDown={keyDown}
+          role="combobox" aria-autocomplete="list" aria-expanded={showResults} aria-controls={listId} aria-activedescendant={showResults && activeIndex >= 0 ? `${listId}-${activeIndex}` : undefined}
+          placeholder="Nome, código ou especificação" autoComplete="off" className="w-full rounded-xl border border-blue-200 bg-white py-3 pl-4 pr-12 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-blue-300" />
+        <button type="submit" aria-label="Buscar no catálogo" className="absolute inset-y-0 right-0 rounded-r-xl px-4 text-blue-700 hover:bg-blue-50"><FaSearch aria-hidden="true" /></button>
       </form>
-
-      {isOpen && (
-        <div className="fixed md:absolute left-4 right-4 md:left-0 md:right-0 top-[80px] md:top-full mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-gray-100 z-[9999] max-h-96 overflow-y-auto text-gray-800 py-2 animate-in fade-in slide-in-from-top-1 duration-200">
-          {results.length > 0 ? (
-            <>
-              <div className="px-5 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-b border-gray-50">Sugestões de Produtos</div>
-              {results.map((product) => (
-                <button
-                  key={product.id}
-                  type="button"
-                  onClick={() => navigateToProduct(product.id)}
-                  className="w-full text-left block px-5 py-4 border-b border-gray-50 last:border-0 hover:bg-blue-50 transition cursor-pointer flex justify-between items-center group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 relative flex-shrink-0 bg-gray-100 rounded-lg overflow-hidden border border-gray-100">
-                      <img src={product.img} alt="" className="w-full h-full object-cover group-hover:scale-110 transition duration-300" />
-                    </div>
-                    <div>
-                      <span className="text-sm font-bold text-gray-800 group-hover:text-blue-700 block line-clamp-1">{product.nome}</span>
-                      <span className="text-[10px] text-gray-400 uppercase font-bold">{product.tag}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-xs font-extrabold text-blue-600 bg-blue-100 px-2 py-1 rounded">
-                      {product.preco}
-                    </span>
-                  </div>
-                </button>
-              ))}
-              <button 
-                type="button"
-                onClick={() => handleSearch()}
-                className="w-full py-4 text-center text-sm font-bold text-blue-600 hover:bg-gray-50 transition border-t border-gray-100 flex items-center justify-center gap-2"
-              >
-                <FaSearch size={12} /> Ver todos os resultados
+      {showResults && (
+        <div className="absolute inset-x-0 top-full z-60 mt-2 max-h-96 overflow-y-auto rounded-xl border border-slate-200 bg-white text-slate-800 shadow-xl">
+          <div id={listId} role="listbox" aria-label="Sugestões de componentes">
+            {results.map((product, index) => (
+              <button key={product.id} id={`${listId}-${index}`} type="button" role="option" aria-selected={activeIndex === index} onClick={() => navigate(`/produto/${product.id}`)} className={`flex w-full items-center gap-3 border-b border-slate-100 p-4 text-left hover:bg-blue-50 ${activeIndex === index ? 'bg-blue-50' : ''}`}>
+                <Image src={product.img} alt="" width={44} height={44} className="h-11 w-11 shrink-0 rounded-lg object-contain" />
+                <span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{product.nome}</span><span className="text-xs text-slate-500">{product.id}</span></span>
+                <span className="shrink-0 text-xs font-bold text-blue-800">{formatCurrency(product.precoNumerico)}</span>
               </button>
-            </>
-          ) : (
-            <div className="px-4 py-8 text-sm text-gray-500 text-center">
-              <div className="text-3xl mb-2">🔍</div>
-              Nenhum produto encontrado para &quot;{query}&quot;
-            </div>
-          )}
+            ))}
+          </div>
+          {!results.length && <p className="p-5 text-sm text-slate-500" role="status">Nenhum componente encontrado para “{query}”.</p>}
+          <button type="button" onClick={() => search()} className="w-full p-4 text-sm font-bold text-blue-700 hover:bg-blue-50">Ver todos os resultados</button>
         </div>
       )}
     </div>
   );
-};
-
-export default SearchBar;
+}

@@ -1,57 +1,38 @@
-"use client";
+'use client';
 
-import React from 'react';
 import Link from 'next/link';
-import { Product } from '@/data/products';
-import { FaCartPlus, FaMicrochip } from 'react-icons/fa';
-import { useCart } from '@/context/CartContext';
-
 import Image from 'next/image';
+import { FaCartPlus, FaMicrochip } from 'react-icons/fa';
+import type { Product } from '@/data/products';
+import { useCart } from '@/context/CartContext';
+import { formatCurrency } from '@/lib/contact';
 
-interface ProductCardProps {
-  product: Product;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const { addToCart } = useCart();
-
+export default function ProductCard({ product }: { product: Product }) {
+  const { addToCart, isHydrated } = useCart();
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition flex flex-col h-full border border-gray-100">
-      <Link href={`/produto/${product.id}`} className="block overflow-hidden relative h-48">
-        <Image 
-          src={product.img} 
-          alt={product.nome} 
-          fill
-          className="object-cover border-b border-gray-100 transform hover:scale-105 transition duration-300" 
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-        />
-        {product.tier === 'High-End' && (
-          <div className="absolute top-2 left-2 bg-indigo-600 text-white text-[8px] font-bold px-2 py-1 rounded-full uppercase tracking-widest shadow-lg flex items-center gap-1 z-10">
-            <FaMicrochip size={10} /> High-End
-          </div>
-        )}
+    <article className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:border-blue-200 hover:shadow-lg">
+      <Link href={`/produto/${product.id}`} className="relative flex h-48 items-center justify-center border-b border-slate-100 bg-white p-6">
+        {product.imageNote ? (
+          <div className="px-5 text-center text-slate-400"><FaMicrochip className="mx-auto mb-3 text-4xl" aria-hidden="true" /><span className="text-xs">{product.imageNote}</span></div>
+        ) : <Image src={product.img} alt={product.nome} fill className="object-contain p-6" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />}
       </Link>
-      <div className="p-5 flex flex-col flex-grow">
-        <span className="text-[10px] font-bold text-blue-500 uppercase tracking-wider mb-1">{product.tag}</span>
-        <Link href={`/produto/${product.id}`} className="hover:text-blue-600 transition">
-          <h3 className="font-bold text-lg text-gray-900 mb-2 leading-tight h-12 overflow-hidden line-clamp-2">
-            {product.nome}
-          </h3>
-        </Link>
-        <p className="text-gray-500 text-sm mb-4 flex-grow line-clamp-3">{product.desc}</p>
-        <div className="flex justify-between items-center mt-auto border-t border-gray-100 pt-4">
-          <span className="font-extrabold text-xl text-blue-950">{product.preco}</span>
-          <button 
-            onClick={() => addToCart(product)}
-            className="bg-blue-100 text-blue-700 p-2.5 rounded hover:bg-blue-200 transition"
-            title="Adicionar ao carrinho"
-          >
-            <FaCartPlus />
-          </button>
+      <div className="flex flex-1 flex-col p-5">
+        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-blue-600">{product.tag}</p>
+        <Link href={`/produto/${product.id}`} className="font-bold leading-snug text-slate-900 hover:text-blue-700"><h3>{product.nome}</h3></Link>
+        <p className="mt-2 text-xs text-slate-500">Ref. {product.id}</p>
+        <p className="mb-4 mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">{product.desc}</p>
+        <dl className="mb-5 grid grid-cols-2 gap-2 text-xs">
+          {product.specs.slice(0, 2).map((spec) => <div key={spec.label} className="rounded-lg bg-slate-50 p-2"><dt className="text-slate-500">{spec.label}</dt><dd className="mt-1 font-semibold text-slate-800">{spec.value}</dd></div>)}
+        </dl>
+        <div className="mt-auto border-t border-slate-100 pt-4">
+          <p className="mb-3 text-xs text-slate-500">{product.availability}</p>
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-xl font-extrabold text-blue-950">{formatCurrency(product.precoNumerico)}</span>
+            <button type="button" disabled={!isHydrated} onClick={() => addToCart(product)} aria-label={`Adicionar ${product.nome} ao carrinho`} className="rounded-xl bg-blue-50 p-3 text-blue-700 transition hover:bg-blue-100 disabled:opacity-50"><FaCartPlus className="text-xl" aria-hidden="true" /></button>
+          </div>
+          <Link href={`/produto/${product.id}`} className="mt-4 inline-block text-sm font-semibold text-blue-700 hover:underline">Ver detalhes técnicos</Link>
         </div>
       </div>
-    </div>
+    </article>
   );
-};
-
-export default ProductCard;
+}

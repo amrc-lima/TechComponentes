@@ -1,54 +1,40 @@
-import React from 'react';
 import Link from 'next/link';
-import { FaMicrochip, FaMapMarkedAlt, FaEnvelope } from 'react-icons/fa';
+import { FaArrowRight, FaMicrochip } from 'react-icons/fa';
+import ContactLink from '@/components/ContactLink';
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-gray-400 py-12 border-t-4 border-blue-600 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
+    <footer className="mt-auto border-t-4 border-blue-600 bg-slate-900 text-slate-300">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-3 lg:gap-16 lg:px-8">
         <div>
-          <h4 className="text-xl font-bold text-white mb-4 uppercase tracking-wider flex items-center">
-            <FaMicrochip className="text-blue-400 mr-2" /> tech componentes
-          </h4>
-          <p className="text-sm leading-relaxed mb-4">
-            Especialistas em hardware homologado para acelerar o ecossistema de inovação. Atuamos com curadoria técnica e suporte para pesquisadores e indústrias.
-          </p>
-          <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">
-            Como: Logística expressa ou retirada em nosso centro de distribuição.
-          </p>
+          <Link href="/" className="inline-flex items-center gap-2 rounded text-xl font-extrabold tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
+            <FaMicrochip className="text-blue-300" aria-hidden="true" /> TechComponentes
+          </Link>
+          <p className="mt-4 text-sm leading-relaxed">Componentes, kits e orientação técnica para estudantes, profissionais de manutenção, makers, empresas e instituições.</p>
+          <p className="mt-4 text-sm leading-relaxed text-slate-400">Conhecimento para escolher. Componentes para construir.</p>
         </div>
-        <div>
-          <h4 className="text-lg font-bold text-white mb-4">Acesso Rápido</h4>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <Link href="/produtos" className="hover:text-white transition">produtos</Link>
-            <Link href="/produtos#kits" className="hover:text-white transition">kits educacionais</Link>
-            <Link href="/b2b" className="hover:text-white transition">empresas b2b</Link>
-            <Link href="/consultoria" className="hover:text-white transition">suporte</Link>
-            <Link href="/sobre" className="hover:text-white transition">Nossa História</Link>
-          </div>
-        </div>
-        <div>
-          <h4 className="text-lg font-bold text-white mb-4">Hub Regional</h4>
-          <ul className="space-y-2 text-sm">
-            <li className="flex items-start gap-2">
-              <FaMapMarkedAlt className="text-blue-400 mt-1 flex-shrink-0" />
-              <span>Av. Eng. Oscar Pontes, 1205, Sala 402<br/>Comércio, Salvador - BA<br/>CEP: 40460-130</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <FaEnvelope className="text-blue-400 flex-shrink-0" /> 
-              <span>corporativo@techcomponentes.com.br</span>
-            </li>
-            <li className="font-bold text-blue-300 pt-2">
-              WhatsApp: (71) 99999-9999
-            </li>
+        <nav aria-label="Explore a TechComponentes">
+          <h2 className="mb-5 font-bold text-white">Explore</h2>
+          <ul className="space-y-3 text-sm">
+            {[
+              { href: '/produtos', label: 'Catálogo de componentes' },
+              { href: '/educacao', label: 'Educação e guias' },
+              { href: '/consultoria', label: 'Orientação técnica' },
+              { href: '/b2b', label: 'Empresas e instituições' },
+              { href: '/sobre', label: 'Sobre a TechComponentes' },
+              { href: '/conta', label: 'Histórico de solicitações' },
+            ].map(({ href, label }) => (
+              <li key={href}><Link href={href} className="rounded transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">{label}</Link></li>
+            ))}
           </ul>
+        </nav>
+        <div>
+          <h2 className="mb-5 font-bold text-white">Vamos pensar no seu projeto?</h2>
+          <p className="text-sm leading-relaxed">Descreva a aplicação, reúna suas dúvidas ou prepare uma lista de componentes para solicitar um orçamento.</p>
+          <ContactLink className="mt-5 inline-flex items-center gap-3 rounded-xl border border-blue-400/40 bg-blue-500/10 px-5 py-3 text-sm font-bold text-blue-200 transition hover:bg-blue-500/20 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">Solicitar orçamento <FaArrowRight aria-hidden="true" /></ContactLink>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center text-xs text-slate-500 border-t border-slate-800 pt-6">
-        &copy; 2026 TechComponentes. Operação Técnica de Alta Performance.
-      </div>
+      <div className="mx-auto max-w-7xl border-t border-slate-800 px-4 py-6 text-xs text-slate-400 sm:px-6 lg:px-8">&copy; 2026 TechComponentes.</div>
     </footer>
   );
-};
-
-export default Footer;
+}

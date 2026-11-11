@@ -1,101 +1,50 @@
-"use client";
+'use client';
 
-import React from 'react';
-import { useCart } from '@/context/CartContext';
-import { FaBox, FaCalendarAlt, FaChevronRight, FaUserCircle, FaMapMarkerAlt, FaShieldAlt } from 'react-icons/fa';
 import Link from 'next/link';
+import { FaClipboardList } from 'react-icons/fa';
+import { useCart } from '@/context/CartContext';
+import ContactActions from '@/components/ContactActions';
+import { formatCurrency } from '@/lib/contact';
+import { getOrderMessage } from '@/lib/quotes';
 
-const AccountPage = () => {
-  const { orders } = useCart();
-
+export default function HistoryPage() {
+  const { orders, isHydrated } = useCart();
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <div className="flex flex-col md:flex-row gap-8">
-        {/* Sidebar */}
-        <div className="md:w-1/4">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 overflow-hidden">
-            <div className="text-center mb-8 pb-8 border-b border-gray-100">
-              <FaUserCircle className="text-6xl text-blue-200 mx-auto mb-4" />
-              <h2 className="font-bold text-gray-900">Membro TechMaker</h2>
-              <p className="text-xs text-gray-500 uppercase tracking-widest mt-1">Nível Bronze</p>
-            </div>
-            <nav className="space-y-2">
-              <Link href="/conta" className="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-700 font-bold transition">
-                <FaBox /> Meus Pedidos
-              </Link>
-              <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition">
-                <FaMapMarkerAlt /> Meus Endereços
-              </button>
-              <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 transition">
-                <FaShieldAlt /> Segurança
-              </button>
-            </nav>
-          </div>
+    <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+      <p className="mb-3 text-sm font-bold uppercase tracking-widest text-blue-600">Seus projetos</p>
+      <h1 className="mb-4 text-3xl font-extrabold text-slate-900">Histórico neste dispositivo</h1>
+      <p className="mb-8 max-w-3xl leading-relaxed text-slate-600">Aqui ficam os resumos preparados a partir do carrinho neste navegador. Você pode consultá-los e compartilhar novamente. Eles não representam compras confirmadas e não são sincronizados entre dispositivos.</p>
+      {!isHydrated ? <p role="status">Carregando histórico…</p> : !orders.length ? (
+        <div className="rounded-2xl border-2 border-dashed border-slate-200 bg-white px-6 py-14 text-center">
+          <FaClipboardList className="mx-auto mb-4 text-5xl text-blue-200" aria-hidden="true" />
+          <h2 className="mb-3 text-xl font-bold text-slate-800">Nenhum orçamento preparado por aqui</h2>
+          <p className="mb-6 text-slate-600">Selecione componentes e prepare o primeiro resumo no carrinho.</p>
+          <Link href="/produtos" className="inline-block rounded-xl bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700">Explorar catálogo</Link>
         </div>
-
-        {/* Content */}
-        <div className="md:w-3/4">
-          <h1 className="text-3xl font-extrabold text-gray-900 mb-8">Histórico de Pedidos</h1>
-
-          {orders.length === 0 ? (
-            <div className="bg-white rounded-2xl border-2 border-dashed border-gray-200 p-16 text-center">
-              <FaBox className="text-5xl text-gray-200 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg mb-6">Você ainda não realizou nenhum pedido conosco.</p>
-              <Link href="/produtos" className="bg-blue-600 text-white font-bold py-3 px-8 rounded-xl hover:bg-blue-700 transition">
-                Ver Catálogo
-              </Link>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {orders.map((order) => (
-                <div key={order.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-                  <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex flex-wrap justify-between items-center gap-4">
-                    <div className="flex gap-6">
-                      <div>
-                        <p className="text-[10px] text-gray-500 uppercase font-bold">Pedido</p>
-                        <p className="font-mono font-bold text-sm">{order.id}</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-gray-500 uppercase font-bold">Data</p>
-                        <p className="font-bold text-sm flex items-center gap-1">
-                          <FaCalendarAlt className="text-gray-400" /> {order.date}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-gray-500 uppercase font-bold">Total</p>
-                        <p className="font-bold text-sm text-blue-900">R$ {order.total.toFixed(2)}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span className="bg-yellow-100 text-yellow-700 text-[10px] font-bold px-3 py-1 rounded-full uppercase">
-                        Aguardando WhatsApp
-                      </span>
-                      <FaChevronRight className="text-gray-300" />
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <div className="flex gap-4 overflow-x-auto pb-2">
-                      {order.items.map((item, idx) => (
-                        <div key={idx} className="flex-shrink-0 relative group">
-                          <img src={item.img} alt={item.nome} className="w-16 h-16 rounded-lg object-cover border border-gray-100" />
-                          <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                            {item.quantity}
-                          </span>
-                          <div className="absolute top-full left-0 mt-2 bg-gray-900 text-white text-[10px] p-2 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-10">
-                            {item.nome}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      ) : (
+        <div className="space-y-5">
+          {orders.map((order) => (
+            <article key={order.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 bg-slate-50 p-5">
+                <div><h2 className="font-bold text-slate-900">Resumo {order.id}</h2><p className="mt-1 text-sm text-slate-500">Preparado em {order.date}</p></div>
+                <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-800">Registro local</span>
+              </div>
+              <div className="p-5">
+                <ul className="mb-5 space-y-3">
+                  {order.items.map((item) => <li key={item.id} className="flex flex-wrap justify-between gap-2 text-sm"><Link href={`/produto/${item.id}`} className="text-slate-700 hover:text-blue-700">{item.quantity} × {item.nome}</Link><span className="font-semibold">{formatCurrency(item.precoNumerico * item.quantity)}</span></li>)}
+                </ul>
+                <p className="mb-5 border-t border-slate-100 pt-4 font-bold text-blue-950">Subtotal de referência: {formatCurrency(order.total)}</p>
+                <details>
+                  <summary className="cursor-pointer font-semibold text-blue-700">Ver e compartilhar resumo</summary>
+                  <pre className="my-4 whitespace-pre-wrap break-words rounded-xl bg-slate-50 p-4 font-sans text-sm leading-relaxed text-slate-700">{getOrderMessage(order)}</pre>
+                  <ContactActions message={getOrderMessage(order)} />
+                </details>
+              </div>
+            </article>
+          ))}
         </div>
-      </div>
+      )}
+      <p className="mt-8 text-sm text-slate-500">Limpar os dados de navegação deste site remove o histórico salvo neste dispositivo.</p>
     </div>
   );
-};
-
-export default AccountPage;
+}

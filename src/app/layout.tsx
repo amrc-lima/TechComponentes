@@ -6,8 +6,8 @@ import Footer from "@/components/Footer";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "TechComponentes | Híbrido: Loja & Consultoria",
-  description: "Atuação focada no desenvolvimento tecnológico do ecossistema baiano através da venda inteligente de insumos homologados.",
+  title: "TechComponentes | Componentes eletrônicos e orientação técnica",
+  description: "Encontre componentes, kits e apoio na escolha das peças para estudar, reparar, prototipar e desenvolver soluções. Para estudantes, técnicos, makers e empresas.",
   icons: {
     icon: "/favicon.ico",
   },
