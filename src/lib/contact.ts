@@ -6,6 +6,12 @@ export function getContactHref(message?: string, requestType: 'orcamento' | 'ori
   return `/b2b${params.size ? `?${params.toString()}` : ''}#orcamento`;
 }
 
+export const WHATSAPP_NUMBER = '5571999999999';
+
+export function getWhatsAppHref(message: string) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
 export function formatCurrency(value: number) {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
