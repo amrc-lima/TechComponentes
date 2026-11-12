@@ -8,6 +8,7 @@ import { useCart, type Order } from '@/context/CartContext';
 import ContactActions from '@/components/ContactActions';
 import { formatCurrency } from '@/lib/contact';
 import { buildQuoteMessage } from '@/lib/quotes';
+import { asset } from '@/lib/assets';
 
 export default function CartPage() {
   const { cart, cartTotal, cartCount, isHydrated, removeFromCart, clearCart, setQuantity, addOrder } = useCart();
@@ -37,7 +38,7 @@ export default function CartPage() {
         <section aria-label="Componentes selecionados" className="space-y-4 lg:col-span-2">
           {cart.map((item) => (
             <article key={item.id} className="flex flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center">
-              <Image src={item.img} alt={item.nome} width={88} height={88} className="h-22 w-22 shrink-0 rounded-xl object-contain" />
+              <Image src={asset(item.img)} alt={item.nome} width={88} height={88} className="h-22 w-22 shrink-0 rounded-xl object-contain" />
               <div className="min-w-0 flex-1">
                 <Link href={`/produto/${item.id}`} className="font-bold text-slate-900 hover:text-blue-700">{item.nome}</Link>
                 <p className="mt-1 text-sm text-slate-500">{item.id} · {formatCurrency(item.precoNumerico)} / unidade</p>

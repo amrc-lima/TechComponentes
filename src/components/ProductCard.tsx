@@ -6,6 +6,7 @@ import { FaCartPlus, FaMicrochip } from 'react-icons/fa';
 import type { Product } from '@/data/products';
 import { useCart } from '@/context/CartContext';
 import { formatCurrency } from '@/lib/contact';
+import { asset } from '@/lib/assets';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart, isHydrated } = useCart();
@@ -14,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
       <Link href={`/produto/${product.id}`} className="relative flex h-48 items-center justify-center border-b border-slate-100 bg-white p-6">
         {product.imageNote ? (
           <div className="px-5 text-center text-slate-400"><FaMicrochip className="mx-auto mb-3 text-4xl" aria-hidden="true" /><span className="text-xs">{product.imageNote}</span></div>
-        ) : <Image src={product.img} alt={product.nome} fill className="object-contain p-6" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />}
+        ) : <Image src={asset(product.img)} alt={product.nome} fill className="object-contain p-6" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />}
       </Link>
       <div className="flex flex-1 flex-col p-5">
         <p className="mb-2 text-xs font-bold uppercase tracking-wide text-blue-700">{product.tag}</p>

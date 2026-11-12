@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { FaSearch } from 'react-icons/fa';
 import { products } from '@/data/products';
 import { formatCurrency } from '@/lib/contact';
+import { asset } from '@/lib/assets';
 
 function normalize(text: string) {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -76,7 +77,7 @@ export default function SearchBar() {
           <div id={listId} role="listbox" aria-label="Sugestões de componentes">
             {results.map((product, index) => (
               <button key={product.id} id={`${listId}-${index}`} type="button" role="option" aria-selected={activeIndex === index} onClick={() => navigate(`/produto/${product.id}`)} className={`flex w-full items-center gap-3 border-b border-slate-100 p-4 text-left hover:bg-blue-50 ${activeIndex === index ? 'bg-blue-50' : ''}`}>
-                <Image src={product.img} alt="" width={44} height={44} className="h-11 w-11 shrink-0 rounded-lg object-contain" />
+                <Image src={asset(product.img)} alt="" width={44} height={44} className="h-11 w-11 shrink-0 rounded-lg object-contain" />
                 <span className="min-w-0 flex-1"><span className="block text-sm font-semibold">{product.nome}</span><span className="text-xs text-slate-500">{product.id}</span></span>
                 <span className="shrink-0 text-xs font-bold text-blue-800">{formatCurrency(product.precoNumerico)}</span>
               </button>

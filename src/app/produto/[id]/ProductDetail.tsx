@@ -8,6 +8,7 @@ import { products, productApplications, productAudiences, productCategories } fr
 import { useCart } from '@/context/CartContext';
 import ContactLink from '@/components/ContactLink';
 import { formatCurrency } from '@/lib/contact';
+import { asset } from '@/lib/assets';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -23,7 +24,7 @@ export default function ProductDetail() {
       <div className="grid overflow-hidden rounded-3xl border border-slate-200 bg-white lg:grid-cols-2">
         <div className="flex flex-col p-6 sm:p-10">
           <div className="relative flex min-h-80 flex-1 items-center justify-center">
-            {product.imageNote ? <div className="p-10 text-center text-slate-400"><FaMicrochip className="mx-auto mb-5 text-6xl" aria-hidden="true" /><p>{product.imageNote}</p></div> : <Image src={product.img} alt={product.nome} fill className="object-contain p-4" sizes="(max-width: 1024px) 100vw, 50vw" priority />}
+            {product.imageNote ? <div className="p-10 text-center text-slate-400"><FaMicrochip className="mx-auto mb-5 text-6xl" aria-hidden="true" /><p>{product.imageNote}</p></div> : <Image src={asset(product.img)} alt={product.nome} fill className="object-contain p-4" sizes="(max-width: 1024px) 100vw, 50vw" priority />}
           </div>
           <div className="mt-8 rounded-2xl bg-blue-50 p-5 text-sm leading-relaxed text-blue-900"><h2 className="mb-2 font-bold">Confira antes de montar</h2><p>{product.compatibility}</p></div>
         </div>
