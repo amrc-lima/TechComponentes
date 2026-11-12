@@ -11,6 +11,7 @@ const navigation = [
   { href: '/consultoria', label: 'Orientação técnica' },
   { href: '/b2b', label: 'Empresas e instituições' },
   { href: '/sobre', label: 'Sobre' },
+  { href: '/contato', label: 'Contato' },
 ];
 
 export default function Header() {

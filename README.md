@@ -14,6 +14,7 @@ Catálogo de componentes eletrônicos com orientação técnica para estudantes,
 - Histórico de resumos preparados salvo no navegador.
 - Trilhas de educação com listas de materiais que podem ser adicionadas ao carrinho.
 - Página para empresas e instituições com formulário de solicitação.
+- Página de contato com canais de atendimento e formulário de mensagem.
 
 Não há backend. O carrinho e o histórico ficam no `localStorage` do visitante, e a solicitação é montada no cliente para que o usuário copie ou compartilhe.
 
@@ -84,6 +85,7 @@ src/
     educacao/             Trilhas de aprendizado
     b2b/                  Empresas e instituições
     consultoria/          Orientação técnica
+    contato/              Fale conosco
     sobre/                Sobre a loja
   components/             Header, Footer, cards, busca, formulários etc.
   context/CartContext.tsx Estado do carrinho e histórico (localStorage)

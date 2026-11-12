@@ -22,6 +22,7 @@ export default function Footer() {
               { href: '/consultoria', label: 'Orientação técnica' },
               { href: '/b2b', label: 'Empresas e instituições' },
               { href: '/sobre', label: 'Sobre a TechComponentes' },
+              { href: '/contato', label: 'Fale conosco' },
               { href: '/conta', label: 'Histórico de solicitações' },
             ].map(({ href, label }) => (
               <li key={href}><Link href={href} className="rounded transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">{label}</Link></li>

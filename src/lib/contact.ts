@@ -7,6 +7,8 @@ export function getContactHref(message?: string, requestType: 'orcamento' | 'ori
 }
 
 export const WHATSAPP_NUMBER = '5571999999999';
+export const WHATSAPP_DISPLAY = '+55 71 99999-9999';
+export const CONTACT_EMAIL = 'contato@techcomponentes.com.br';
 
 export function getWhatsAppHref(message: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
