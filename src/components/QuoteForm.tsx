@@ -126,7 +126,7 @@ function QuoteFormContent({ initialMessage, initialType }: { initialMessage: str
               )}
             </div>
           ))}
-          <button type="button" onClick={addItem} className="rounded-lg border border-blue-200 px-4 py-2 text-sm font-bold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Adicionar componente</button>
+          <button type="button" onClick={addItem} className="rounded-lg border border-blue-200 px-4 py-2 text-sm font-bold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">Adicionar componente</button>
         </fieldset>
 
         <div>

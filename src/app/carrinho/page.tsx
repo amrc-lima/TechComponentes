@@ -25,12 +25,12 @@ export default function CartPage() {
       <FaClipboardList className="mx-auto mb-5 text-5xl text-blue-200" aria-hidden="true" />
       <h1 className="mb-4 text-3xl font-extrabold text-slate-900">Seu carrinho está vazio</h1>
       <p className="mb-8 text-slate-600">Escolha os componentes do seu projeto para preparar um orçamento.</p>
-      <Link href="/produtos" className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700"><FaArrowLeft aria-hidden="true" /> Explorar catálogo</Link>
+      <Link href="/produtos" className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-bold text-slate-950 hover:bg-blue-500"><FaArrowLeft aria-hidden="true" /> Explorar catálogo</Link>
     </div>
   );
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <p className="mb-3 text-sm font-bold uppercase tracking-widest text-blue-600">Do catálogo ao seu projeto</p>
+      <p className="mb-3 text-sm font-bold uppercase tracking-widest text-blue-700">Do catálogo ao seu projeto</p>
       <h1 className="mb-3 text-3xl font-extrabold text-slate-900">Carrinho de componentes</h1>
       <p className="mb-10 max-w-3xl text-slate-600">Confira as quantidades e prepare um resumo para solicitar orçamento. Disponibilidade, entrega e pagamento serão combinados no atendimento.</p>
       <div className="grid items-start gap-8 lg:grid-cols-3">
@@ -39,7 +39,7 @@ export default function CartPage() {
             <article key={item.id} className="flex flex-col gap-5 rounded-2xl border border-slate-200 bg-white p-5 sm:flex-row sm:items-center">
               <Image src={item.img} alt={item.nome} width={88} height={88} className="h-22 w-22 shrink-0 rounded-xl object-contain" />
               <div className="min-w-0 flex-1">
-                <Link href={`/produto/${item.id}`} className="font-bold text-slate-900 hover:text-blue-600">{item.nome}</Link>
+                <Link href={`/produto/${item.id}`} className="font-bold text-slate-900 hover:text-blue-700">{item.nome}</Link>
                 <p className="mt-1 text-sm text-slate-500">{item.id} · {formatCurrency(item.precoNumerico)} / unidade</p>
                 <div className="mt-3 flex items-center gap-3">
                   <span className="text-sm text-slate-600">Quantidade</span>
@@ -68,7 +68,7 @@ export default function CartPage() {
             <div className="flex justify-between gap-3"><dt>Frete e disponibilidade</dt><dd>A confirmar</dd></div>
             <div className="flex justify-between gap-3 border-t border-slate-100 pt-4 text-lg font-bold text-blue-950"><dt>Subtotal</dt><dd>{formatCurrency(cartTotal)}</dd></div>
           </dl>
-          <button type="button" onClick={prepareQuote} disabled={matchesPrepared} className="mt-6 w-full rounded-xl bg-blue-600 px-5 py-4 font-bold text-white hover:bg-blue-700 disabled:bg-blue-100 disabled:text-blue-800">{matchesPrepared ? 'Orçamento preparado' : 'Preparar orçamento'}</button>
+          <button type="button" onClick={prepareQuote} disabled={matchesPrepared} className="mt-6 w-full rounded-xl bg-blue-600 px-5 py-4 font-bold text-slate-950 hover:bg-blue-500 disabled:bg-blue-100 disabled:text-blue-800">{matchesPrepared ? 'Orçamento preparado' : 'Preparar orçamento'}</button>
           <p className="mt-4 text-sm leading-relaxed text-slate-500">O resumo fica salvo neste navegador. Os itens permanecem no carrinho enquanto você decide como encaminhá-lo.</p>
           <Link href="/conta" className="mt-4 inline-block text-sm font-bold text-blue-700 hover:underline">Ver histórico neste dispositivo</Link>
         </aside>

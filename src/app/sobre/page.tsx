@@ -34,7 +34,7 @@ export default function SobrePage() {
       <section className="py-16 sm:py-20" aria-labelledby="origin-heading">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:px-8">
           <div>
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-600">Nossa origem</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-700">Nossa origem</p>
             <h2 id="origin-heading" className="text-3xl font-extrabold leading-tight tracking-tight text-slate-900">Da formação acadêmica à proposta de negócio.</h2>
             <div className="mt-6 space-y-5 text-lg leading-relaxed text-slate-600">
               <p>A TechComponentes nasceu como uma proposta de negócio na disciplina de Empreendedorismo do curso de Sistemas de Informação da Universidade do Estado da Bahia (UNEB), em Salvador.</p>
@@ -43,7 +43,7 @@ export default function SobrePage() {
             </div>
           </div>
           <aside className="self-start rounded-3xl border border-blue-100 bg-blue-50 p-8 sm:p-10">
-            <FaGraduationCap className="mb-6 text-4xl text-blue-600" aria-hidden="true" />
+            <FaGraduationCap className="mb-6 text-4xl text-blue-700" aria-hidden="true" />
             <h3 className="text-2xl font-bold text-blue-950">Uma visão que aproxima pessoas e tecnologia</h3>
             <p className="mt-4 leading-relaxed text-blue-900/80">O modelo planejado combina loja física e e-commerce, com curadoria de componentes, conteúdo educativo e apoio técnico presencial e remoto.</p>
             <p className="mt-4 leading-relaxed text-blue-900/80">A Bahia é o ponto de partida dessa proposta, com o objetivo de ampliar o acesso e o atendimento ao longo do seu desenvolvimento.</p>
@@ -56,7 +56,7 @@ export default function SobrePage() {
           <h2 id="purpose-heading" className="mb-10 text-3xl font-extrabold tracking-tight text-slate-900">O que nos orienta</h2>
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-slate-200 bg-white p-8">
-              <FaBullseye className="mb-5 text-3xl text-blue-600" aria-hidden="true" />
+              <FaBullseye className="mb-5 text-3xl text-blue-700" aria-hidden="true" />
               <h3 className="text-2xl font-bold text-blue-950">Missão</h3>
               <p className="mt-4 text-lg leading-relaxed text-slate-600">Fornecer componentes eletrônicos de qualidade, atendendo às necessidades de clientes com eficiência, confiança e bom atendimento.</p>
             </div>
@@ -78,7 +78,7 @@ export default function SobrePage() {
           <div className="grid gap-8 md:grid-cols-3">
             {principles.map(({ title, description, icon: Icon }) => (
               <div key={title}>
-                <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-600"><Icon aria-hidden="true" /></span>
+                <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-2xl text-blue-700"><Icon aria-hidden="true" /></span>
                 <h3 className="text-xl font-bold text-slate-900">{title}</h3>
                 <p className="mt-3 leading-relaxed text-slate-600">{description}</p>
               </div>

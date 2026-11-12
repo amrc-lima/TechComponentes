@@ -11,7 +11,7 @@ export default function HistoryPage() {
   const { orders, isHydrated } = useCart();
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-      <p className="mb-3 text-sm font-bold uppercase tracking-widest text-blue-600">Seus projetos</p>
+      <p className="mb-3 text-sm font-bold uppercase tracking-widest text-blue-700">Seus projetos</p>
       <h1 className="mb-4 text-3xl font-extrabold text-slate-900">Histórico neste dispositivo</h1>
       <p className="mb-8 max-w-3xl leading-relaxed text-slate-600">Aqui ficam os resumos preparados a partir do carrinho neste navegador. Você pode consultá-los e compartilhar novamente. Eles não representam compras confirmadas e não são sincronizados entre dispositivos.</p>
       {!isHydrated ? <p role="status">Carregando histórico…</p> : !orders.length ? (
@@ -19,7 +19,7 @@ export default function HistoryPage() {
           <FaClipboardList className="mx-auto mb-4 text-5xl text-blue-200" aria-hidden="true" />
           <h2 className="mb-3 text-xl font-bold text-slate-800">Nenhum orçamento preparado por aqui</h2>
           <p className="mb-6 text-slate-600">Selecione componentes e prepare o primeiro resumo no carrinho.</p>
-          <Link href="/produtos" className="inline-block rounded-xl bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700">Explorar catálogo</Link>
+          <Link href="/produtos" className="inline-block rounded-xl bg-blue-600 px-6 py-3 font-bold text-slate-950 hover:bg-blue-500">Explorar catálogo</Link>
         </div>
       ) : (
         <div className="space-y-5">

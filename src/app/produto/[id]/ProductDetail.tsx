@@ -28,7 +28,7 @@ export default function ProductDetail() {
           <div className="mt-8 rounded-2xl bg-blue-50 p-5 text-sm leading-relaxed text-blue-900"><h2 className="mb-2 font-bold">Confira antes de montar</h2><p>{product.compatibility}</p></div>
         </div>
         <div className="border-t border-slate-100 bg-slate-50 p-6 sm:p-10 lg:border-l lg:border-t-0">
-          <Link href={`/produtos?categoria=${product.category}`} className="text-xs font-bold uppercase tracking-widest text-blue-600">{categoryLabel}</Link>
+          <Link href={`/produtos?categoria=${product.category}`} className="text-xs font-bold uppercase tracking-widest text-blue-700">{categoryLabel}</Link>
           <h1 className="mt-4 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">{product.nome}</h1>
           <p className="mt-3 text-sm text-slate-500">Referência do catálogo: {product.id}</p>
           <p className="mt-6 text-3xl font-extrabold text-blue-950">{formatCurrency(product.precoNumerico)}</p>
@@ -36,7 +36,7 @@ export default function ProductDetail() {
           <p className="mt-6 leading-relaxed text-slate-600">{product.desc}</p>
           <dl className="my-7 space-y-4 text-sm"><div><dt className="font-bold text-slate-900">Aplicações</dt><dd className="mt-1 text-slate-600">{applications.join(' · ')}</dd></div><div><dt className="font-bold text-slate-900">Para quem</dt><dd className="mt-1 text-slate-600">{audiences.join(' · ')}</dd></div></dl>
           {product.certification && <div className="mb-6 rounded-xl border border-blue-200 bg-white p-4 text-sm"><p className="font-bold text-slate-900">{product.certification.label}</p><p className="mt-1 text-slate-600">Referência: {product.certification.reference}</p>{product.certification.url && <a href={product.certification.url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block font-semibold text-blue-700 hover:underline">Consultar documentação</a>}</div>}
-          <button type="button" disabled={!isHydrated} onClick={() => addToCart(product)} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-white hover:bg-blue-700 disabled:opacity-50"><FaCartPlus aria-hidden="true" /> Adicionar ao carrinho</button>
+          <button type="button" disabled={!isHydrated} onClick={() => addToCart(product)} className="inline-flex w-full items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-slate-950 hover:bg-blue-500 disabled:opacity-50"><FaCartPlus aria-hidden="true" /> Adicionar ao carrinho</button>
           <ContactLink message={`Gostaria de orientação sobre ${product.nome} (referência ${product.id}) e sua compatibilidade com meu projeto.`} className="mt-3 inline-flex w-full items-center justify-center rounded-xl border border-blue-200 bg-white px-6 py-4 text-center font-bold text-blue-700 hover:bg-blue-50">Pedir orientação sobre esta peça</ContactLink>
           <p className="mt-4 text-sm leading-relaxed text-slate-500">Use o carrinho para preparar um orçamento. Disponibilidade, frete, prazo e condições serão confirmados no atendimento.</p>
         </div>

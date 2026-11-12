@@ -12,7 +12,7 @@ export default function B2BPage() {
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-indigo-200">
             Organize uma cotação por quantidade, uma lista para o laboratório ou uma necessidade de fornecimento recorrente com orientação técnica.
           </p>
-          <a href="#orcamento" className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+          <a href="#orcamento" className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-slate-950 transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
             Preparar solicitação de orçamento
           </a>
         </div>
@@ -31,7 +31,7 @@ export default function B2BPage() {
               { icon: FaGraduationCap, title: 'Kits para instituições', text: 'Descreva a atividade, o número de participantes e os componentes desejados para compor kits de aulas e laboratórios.' },
             ].map(({ icon: Icon, title, text }) => (
               <article key={title} className="rounded-2xl border border-gray-200 bg-gray-50 p-7">
-                <Icon className="mb-5 text-3xl text-blue-600" aria-hidden="true" />
+                <Icon className="mb-5 text-3xl text-blue-700" aria-hidden="true" />
                 <h3 className="text-xl font-bold text-gray-900">{title}</h3>
                 <p className="mt-3 leading-relaxed text-gray-600">{text}</p>
               </article>

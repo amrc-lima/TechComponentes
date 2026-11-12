@@ -46,7 +46,7 @@ export default function ContactActions({
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-3">
-        <button type="button" onClick={copy} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700">
+        <button type="button" onClick={copy} className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-bold text-slate-950 transition hover:bg-blue-500">
           <FaCopy aria-hidden="true" /> Copiar resumo
         </button>
         <button type="button" onClick={share} className="inline-flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white px-5 py-3 font-bold text-blue-800 transition hover:bg-blue-50">

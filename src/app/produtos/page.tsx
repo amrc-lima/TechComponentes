@@ -43,7 +43,7 @@ function ProductsList() {
       <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8" aria-label="Busca e filtros do catálogo">
         <form onSubmit={(event) => { event.preventDefault(); updateFilter('busca', String(new FormData(event.currentTarget).get('busca') ?? '').trim()); }} className="mb-6 flex flex-col gap-3 sm:flex-row">
           <div className="flex-1"><label htmlFor="catalog-search" className="mb-2 block text-sm font-semibold text-slate-700">Buscar por nome, referência ou especificação</label><input key={search} id="catalog-search" name="busca" defaultValue={search} placeholder="Ex.: ESP32, sensor ou I2C" className={fieldClass} /></div>
-          <button type="submit" className="inline-flex items-center justify-center gap-2 self-end rounded-xl bg-blue-600 px-6 py-3 font-bold text-white hover:bg-blue-700"><FaSearch aria-hidden="true" /> Buscar</button>
+          <button type="submit" className="inline-flex items-center justify-center gap-2 self-end rounded-xl bg-blue-600 px-6 py-3 font-bold text-slate-950 hover:bg-blue-500"><FaSearch aria-hidden="true" /> Buscar</button>
         </form>
         <div className="grid gap-4 rounded-2xl border border-slate-200 bg-white p-5 sm:grid-cols-2 lg:grid-cols-4">
           <div><label htmlFor="catalog-category" className="mb-2 block text-sm font-semibold text-slate-700">Categoria</label><select id="catalog-category" value={category} onChange={(event) => updateFilter('categoria', event.target.value)} className={fieldClass}><option value="">Todas as categorias</option>{productCategories.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></div>

@@ -1,14 +1,81 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-lato), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-pt-sans), "PT Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --color-blue-50: #fdf8e7;
+  --color-blue-100: #faf0c4;
+  --color-blue-200: #f5e08d;
+  --color-blue-300: #efcb55;
+  --color-blue-400: #e5bc41;
+  --color-blue-500: #d4a72c;
+  --color-blue-600: #e5bc41;
+  --color-blue-700: #8f651c;
+  --color-blue-800: #3e454c;
+  --color-blue-900: #3e454c;
+  --color-blue-950: #252525;
+
+  --color-indigo-50: #eefcf3;
+  --color-indigo-100: #d6f7e2;
+  --color-indigo-200: #b0edc8;
+  --color-indigo-300: #7ddfa7;
+  --color-indigo-400: #3fcd7f;
+  --color-indigo-500: #22b468;
+  --color-indigo-600: #159253;
+  --color-indigo-700: #147446;
+  --color-indigo-800: #155c3b;
+  --color-indigo-900: #134c33;
+  --color-indigo-950: #1c2024;
+
+  --color-slate-50: #f7f7f7;
+  --color-slate-100: #efefef;
+  --color-slate-200: #e2e2e2;
+  --color-slate-300: #cfcfcf;
+  --color-slate-400: #a3a3a3;
+  --color-slate-500: #7a7a7a;
+  --color-slate-600: #555555;
+  --color-slate-700: #3f3f3f;
+  --color-slate-800: #2f2f2f;
+  --color-slate-900: #252525;
+  --color-slate-950: #171717;
+
+  --color-gray-50: #f7f7f7;
+  --color-gray-100: #efefef;
+  --color-gray-200: #e2e2e2;
+  --color-gray-300: #cfcfcf;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #7a7a7a;
+  --color-gray-600: #555555;
+  --color-gray-700: #3f3f3f;
+  --color-gray-800: #2f2f2f;
+  --color-gray-900: #252525;
+  --color-gray-950: #171717;
+
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.25rem;
+  --radius-2xl: 0.9375rem;
+  --radius-3xl: 1rem;
+}
+
 :root {
-  --background: #f9fafb;
-  --foreground: #111827;
+  --background: #f7f7f7;
+  --foreground: #252525;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
 }
 
 @layer base {

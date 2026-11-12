@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
         ) : <Image src={product.img} alt={product.nome} fill className="object-contain p-6" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />}
       </Link>
       <div className="flex flex-1 flex-col p-5">
-        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-blue-600">{product.tag}</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-wide text-blue-700">{product.tag}</p>
         <Link href={`/produto/${product.id}`} className="font-bold leading-snug text-slate-900 hover:text-blue-700"><h3>{product.nome}</h3></Link>
         <p className="mt-2 text-xs text-slate-500">Ref. {product.id}</p>
         <p className="mb-4 mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600">{product.desc}</p>

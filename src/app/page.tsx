@@ -55,7 +55,7 @@ export default function Home() {
               Encontre componentes, kits e apoio na escolha das peças para estudar, reparar, prototipar e desenvolver soluções.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <Link href="/produtos" className="inline-flex items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-white shadow-lg transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
+              <Link href="/produtos" className="inline-flex items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-slate-950 shadow-lg transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
                 Explorar catálogo <FaArrowRight aria-hidden="true" />
               </Link>
               <ContactLink message="Olá! Gostaria de orientação técnica para escolher os componentes do meu projeto." className="inline-flex items-center justify-center gap-3 rounded-xl border border-white/25 bg-white/5 px-6 py-4 font-bold text-white transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
@@ -104,13 +104,13 @@ export default function Home() {
       <section className="bg-white py-16 sm:py-20" aria-labelledby="audiences-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 max-w-2xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-600">Encontre seu caminho</p>
+            <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-700">Encontre seu caminho</p>
             <h2 id="audiences-heading" className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">O que você quer desenvolver?</h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">Para aprender, resolver um reparo ou desenvolver uma solução, comece pelo que faz sentido para você.</p>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {audiences.map(({ title, description, href, action, icon: Icon, color }) => (
-              <Link key={href} href={href} className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
+              <Link key={href} href={href} className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-7 transition hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700">
                 <span className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl text-2xl ${color}`}>
                   <Icon aria-hidden="true" />
                 </span>
@@ -127,11 +127,11 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-10 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-600">Explore o catálogo</p>
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-700">Explore o catálogo</p>
               <h2 id="highlights-heading" className="text-3xl font-extrabold tracking-tight text-blue-950">Do básico aos projetos conectados</h2>
               <p className="mt-3 max-w-2xl leading-relaxed text-slate-600">Componentes para a bancada, kits para começar e módulos para explorar novas aplicações.</p>
             </div>
-            <Link href="/produtos" className="inline-flex shrink-0 items-center gap-3 self-start rounded-xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600">
+            <Link href="/produtos" className="inline-flex shrink-0 items-center gap-3 self-start rounded-xl border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-700 transition hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700">
               Ver catálogo completo <FaArrowRight aria-hidden="true" />
             </Link>
           </div>
@@ -148,7 +148,7 @@ export default function Home() {
             <h2 id="guidance-heading" className="text-3xl font-extrabold leading-tight tracking-tight sm:text-4xl">A peça certa começa com a pergunta certa.</h2>
             <p className="mt-5 text-lg leading-relaxed text-indigo-100">Qual tensão usar? Os módulos são compatíveis? O que falta na sua lista? Estudantes, profissionais de manutenção, makers e empresas podem começar por essas perguntas.</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              <ContactLink message="Olá! Gostaria de orientação técnica para revisar minha lista de componentes." className="inline-flex items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
+              <ContactLink message="Olá! Gostaria de orientação técnica para revisar minha lista de componentes." className="inline-flex items-center justify-center gap-3 rounded-xl bg-blue-600 px-6 py-4 font-bold text-slate-950 transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">
                 Pedir orientação técnica <FaArrowRight aria-hidden="true" />
               </ContactLink>
               <Link href="/consultoria" className="inline-flex items-center justify-center rounded-xl border border-white/25 px-6 py-4 font-semibold transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300">Conhecer a orientação técnica</Link>

@@ -34,7 +34,7 @@ export default function Header() {
               <FaHistory aria-hidden="true" />
               <span className="hidden sm:inline">Histórico</span>
             </Link>
-            <Link href="/carrinho" className="relative inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-xs font-bold transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300 sm:text-sm">
+            <Link href="/carrinho" className="relative inline-flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2.5 text-xs font-bold text-slate-950 transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-300 sm:text-sm">
               <FaShoppingCart aria-hidden="true" /> Carrinho
               {cartCount > 0 && (
                 <span className="absolute -right-2 -top-2 min-w-5 rounded-full border-2 border-blue-900 bg-blue-200 px-1.5 py-0.5 text-center text-[10px] font-bold text-blue-950">

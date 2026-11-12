@@ -16,7 +16,7 @@ export default function ConsultoriaPage() {
           <p className="mb-4 text-sm font-bold uppercase tracking-widest text-blue-300">Atendimento consultivo</p>
           <h1 className="max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl">Orientação técnica para escolher e aplicar seus componentes</h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-blue-100">Para quem está aprendendo, criando um protótipo, reparando um equipamento ou planejando uma demanda profissional.</p>
-          <ContactLink message="Gostaria de orientação técnica para meu projeto." className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Descrever meu projeto</ContactLink>
+          <ContactLink message="Gostaria de orientação técnica para meu projeto." className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-slate-950 transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Descrever meu projeto</ContactLink>
         </div>
       </section>
 
@@ -27,7 +27,7 @@ export default function ConsultoriaPage() {
           <div className="mt-10 grid gap-6 md:grid-cols-2">
             {services.map(({ icon: Icon, title, text }) => (
               <article key={title} className="rounded-2xl border border-gray-200 bg-white p-7 sm:p-8">
-                <Icon className="mb-5 text-3xl text-blue-600" aria-hidden="true" />
+                <Icon className="mb-5 text-3xl text-blue-700" aria-hidden="true" />
                 <h3 className="text-xl font-bold text-gray-900">{title}</h3>
                 <p className="mt-3 leading-relaxed text-gray-600">{text}</p>
               </article>
@@ -59,7 +59,7 @@ export default function ConsultoriaPage() {
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
           <h2 className="text-3xl font-bold">Qual é a sua próxima aplicação?</h2>
           <p className="mt-5 text-lg leading-relaxed text-indigo-200">Uma lista de componentes e uma breve descrição já ajudam a começar. O formulário prepara uma mensagem para você revisar e encaminhar.</p>
-          <ContactLink message="Gostaria de conversar sobre seleção e compatibilidade de componentes para meu projeto." className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Preparar minha solicitação</ContactLink>
+          <ContactLink message="Gostaria de conversar sobre seleção e compatibilidade de componentes para meu projeto." className="mt-8 inline-flex rounded-xl bg-blue-600 px-7 py-4 font-bold text-slate-950 transition hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Preparar minha solicitação</ContactLink>
         </div>
       </section>
     </div>
