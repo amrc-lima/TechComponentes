@@ -8,9 +8,6 @@ import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: "TechComponentes | Componentes eletrônicos e orientação técnica",
   description: "Encontre componentes, kits e apoio na escolha das peças para estudar, reparar, prototipar e desenvolver soluções. Para estudantes, técnicos, makers e empresas.",
-  icons: {
-    icon: "/favicon.ico",
-  },
 };
 
 export default function RootLayout({
