@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   basePath: "/TechComponentes",
+  env: {
+    NEXT_PUBLIC_WHATSAPP_NUMBER: process.env.wpp?.replace(/\D/g, "") ?? "",
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

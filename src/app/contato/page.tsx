@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FaArrowRight, FaClock, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaWhatsapp } from 'react-icons/fa';
 import ContactForm from '@/components/ContactForm';
+import { socialLinks } from '@/data/social';
 import { CONTACT_EMAIL, WHATSAPP_DISPLAY, getWhatsAppHref } from '@/lib/contact';
 
 type Channel = {
@@ -96,6 +97,19 @@ export default function ContatoPage() {
                 )}
               </article>
             ))}
+          </div>
+          <div className="mt-10 flex flex-col gap-6 rounded-2xl border border-gray-200 bg-white p-7 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h3 className="text-xl font-bold text-gray-900">Acompanhe a TechComponentes</h3>
+              <p className="mt-2 text-sm leading-relaxed text-gray-600">Conteúdos, novidades e bastidores dos projetos.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              {socialLinks.map(({ label, href, icon: Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm font-bold text-slate-900 transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">
+                  <Icon aria-hidden="true" /> {label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

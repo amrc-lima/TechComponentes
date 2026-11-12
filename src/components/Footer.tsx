@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { FaArrowRight, FaMicrochip } from 'react-icons/fa';
 import ContactLink from '@/components/ContactLink';
+import { socialLinks } from '@/data/social';
 
 export default function Footer() {
   return (
@@ -12,6 +13,13 @@ export default function Footer() {
           </Link>
           <p className="mt-4 text-sm leading-relaxed">Componentes, kits e orientação técnica para estudantes, profissionais de manutenção, makers, empresas e instituições.</p>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">Conhecimento para escolher. Componentes para construir.</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} da TechComponentes`} title={label} className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-700 text-slate-300 transition hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300">
+                <Icon aria-hidden="true" />
+              </a>
+            ))}
+          </div>
         </div>
         <nav aria-label="Explore a TechComponentes">
           <h2 className="mb-5 font-bold text-white">Explore</h2>
